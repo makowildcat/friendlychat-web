@@ -1,0 +1,36 @@
+[debug] [2018-04-21T19:08:24.834Z] ----------------------------------------------------------------------
+[debug] [2018-04-21T19:08:24.836Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2018-04-21T19:08:24.836Z] CLI Version:   3.14.0
+[debug] [2018-04-21T19:08:24.836Z] Platform:      darwin
+[debug] [2018-04-21T19:08:24.836Z] Node Version:  v8.9.0
+[debug] [2018-04-21T19:08:24.836Z] Time:          Sat Apr 21 2018 15:08:24 GMT-0400 (EDT)
+[debug] [2018-04-21T19:08:24.837Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-04-21T19:08:24.848Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-04-21T19:08:24.848Z] > authorizing via signed-in user
+[debug] [2018-04-21T19:08:24.849Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-04-21T19:08:24.849Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/ewgREOCulRh6vohULSykPi_jcJDsct4y8MT1YciD7rk',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sat Apr 21 2018 15:08:24 GMT-0400 (EDT)
+[debug] [2018-04-21T19:08:25.076Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-21T19:08:25.097Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/gamejam-chi2018  
+ Sat Apr 21 2018 15:08:25 GMT-0400 (EDT)
+[debug] [2018-04-21T19:08:25.372Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-21T19:08:25.373Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/gamejam-chi2018/tokens  
+ Sat Apr 21 2018 15:08:25 GMT-0400 (EDT)
+[debug] [2018-04-21T19:08:25.677Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/damienbrun/Documents/Developpement/Web/gamejam-chi2018/web'...
+[info] 
+[debug] [2018-04-21T19:08:25.680Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/gamejam-chi2018  
+ Sat Apr 21 2018 15:08:25 GMT-0400 (EDT)
+[debug] [2018-04-21T19:08:25.988Z] <<< HTTP RESPONSE 200
+[debug] [2018-04-21T19:08:25.989Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/286932422623/clients/_:getWebAppConfig  
+ Sat Apr 21 2018 15:08:25 GMT-0400 (EDT)
+[debug] [2018-04-21T19:08:26.239Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: ./
+[info] ✔  hosting: Local server: http://localhost:5000
+
