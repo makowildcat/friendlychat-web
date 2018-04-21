@@ -1,6 +1,6 @@
 {
-  "name": "Friendly Chat",
-  "short_name": "Friendly Chat",
+  "name": "You can't do it alone",
+  "short_name": "You can't do it alone",
   "start_url": "/index.html",
   "display": "standalone",
   "orientation": "portrait",

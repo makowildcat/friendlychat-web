@@ -1,11 +1,11 @@
 {
   "version": "1.0.0",
-  "name": "Friendly Chat",
+  "name": "You can't do it alone",
   "launch_path": "/index.html",
-  "description": "Chat with friends using Firebase 2.0",
+  "description": "Play with friends using Firebase",
   "developer": {
-    "name": "Google inc.",
-    "url": "https://firebase.google.com"
+    "name": "GameJam-CHI2018 Team",
+    "url": ""
   },
   "installs_allowed_from": [
     "*"
@@ -15,8 +15,8 @@
   },
   "locales": {
     "en": {
-      "name": "Friendly Chat",
-      "description": "Chat with friends using Firebase 2.0"
+      "name": "You can't do it alone",
+      "description": "Play with friends using Firebase"
     }
   }
 }
