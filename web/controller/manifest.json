@@ -1,0 +1,8 @@
+{
+  "name": "You can't do it alone",
+  "short_name": "You can't do it alone",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "gcm_sender_id": "103953800507"
+}
