@@ -22,9 +22,11 @@ function NotAlone() {
   // Shortcuts to DOM Elements.
   this.buttonLeft = document.getElementById('btn-left');
   this.buttonRight = document.getElementById('btn-right');
+  this.buttonAuto = document.getElementById('btn-auto');
 
-  this.buttonLeft.addEventListener('click', this.signIn.bind(this, this.buttonLeft.id));
-  this.buttonRight.addEventListener('click', this.signIn.bind(this, this.buttonRight.id));
+  this.buttonLeft.addEventListener('click', this.signIn.bind(this, "Left"));
+  this.buttonRight.addEventListener('click', this.signIn.bind(this, "Right"));
+  //this.buttonAuto.addEventListener('click', this.assignAuto.bind(this));
 
   this.initFirebase();
 }
@@ -52,7 +54,32 @@ NotAlone.prototype.saveHand = function(e) {
       console.error('Error writing new message to Firebase Database', error);
     });
   }
-}
+};
+
+/*
+NotAlone.prototype.assignAuto = function() {
+  var countLeft = 0;
+  var countRight = 0;
+  this.database.ref('people').once('value').then(function(snapshot) {
+    snapshot.forEach(function(data) {
+      switch(data.val().hand){
+        case "Right":
+          countRight++;
+          break;
+        case "Left":
+          countLeft++;
+          break;
+      }
+    });
+}).then(function() {
+    if (countRight > countLeft) {
+      this.signIn("Left");
+    } else {
+      this.signIn("Left");
+    }
+});
+};
+*/
 
 // Signs-in NotAlone.
 NotAlone.prototype.signIn = function(e) {

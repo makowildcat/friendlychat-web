@@ -15,23 +15,20 @@
  */
 'use strict';
 
+var handCurrentUser = "";
+var buttonFirstTxt = "";
+var buttonSecondTxt = "";
+
 // Initializes NotAlone.
 function NotAlone() {
   this.checkSetup();
 
   // Shortcuts to DOM Elements.
-  this.headerHand = document.getElementById('header-hand');
   this.buttonFirst = document.getElementById('btn-first');
   this.buttonSecond = document.getElementById('btn-second');
-  this.buttonThird = document.getElementById('btn-third');
-  this.buttonFourth = document.getElementById('btn-fourth');
-  this.buttonFifth = document.getElementById('btn-fifth');
 
-  this.buttonFirst.addEventListener('click', this.sendVote.bind(this, this.buttonFirst.id));
-  this.buttonSecond.addEventListener('click', this.sendVote.bind(this, this.buttonSecond.id));
-  this.buttonThird.addEventListener('click', this.sendVote.bind(this, this.buttonThird.id));
-  this.buttonFourth.addEventListener('click', this.sendVote.bind(this, this.buttonFourth.id));
-  this.buttonFifth.addEventListener('click', this.signOut.bind(this));
+  this.buttonFirst.addEventListener('click', this.sendVoteFirst.bind(this));
+  this.buttonSecond.addEventListener('click', this.sendVoteSecond.bind(this));
 
   this.initFirebase();
 }
@@ -47,13 +44,30 @@ NotAlone.prototype.initFirebase = function() {
 };
 
 
-NotAlone.prototype.sendVote = function(e) {
+NotAlone.prototype.sendVoteFirst = function() {
   // Check that the user is signed in.
   if (this.checkSignedInWithMessage()) {
     var currentUser = this.auth.currentUser;
     // Send a vote entry to the Firebase Database.
-    this.database.ref("cooking/left/" + currentUser.uid).set({
-      vote: e,
+    this.database.ref("cooking/" + currentUser.uid).set({
+      vote: buttonFirstTxt,
+      hand: handCurrentUser,
+    }).then(function() {
+
+    }.bind(this)).catch(function(error) {
+      console.error('Error writing new message to Firebase Database', error);
+    });
+  }
+}
+
+NotAlone.prototype.sendVoteSecond = function() {
+  // Check that the user is signed in.
+  if (this.checkSignedInWithMessage()) {
+    var currentUser = this.auth.currentUser;
+    // Send a vote entry to the Firebase Database.
+    this.database.ref("cooking/" + currentUser.uid).set({
+      vote: buttonSecondTxt,
+      hand: handCurrentUser,
     }).then(function() {
 
     }.bind(this)).catch(function(error) {
@@ -73,14 +87,20 @@ NotAlone.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
     var handRef = this.database.ref('people/' + user.uid);
     handRef.on('value', function(snapshot) {
-      //var handText = div.querySelector('#header-hand');
-      var div = document.getElementById("header-hand");
-      div.innerHTML = snapshot.val().hand;
-    });
-
-    this.database.ref('people/' + user.uid).once('value').then(function(snapshot) {
-      var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-      // ...
+      handCurrentUser = snapshot.val().hand;
+      var headerHandRef = document.getElementById("header-hand");
+      var buttonFirst = document.getElementById('btn-first');
+      var buttonSecond = document.getElementById('btn-second');
+      headerHandRef.innerHTML = handCurrentUser;
+      if (handCurrentUser == "Left") {
+          buttonFirstTxt = "Grab";
+          buttonSecondTxt = "Release";
+      } else {
+          buttonFirstTxt = "Mash";
+          buttonSecondTxt = "Cook";
+      }
+      buttonFirst.innerHTML = buttonFirstTxt;
+      buttonSecond.innerHTML = buttonSecondTxt;
     });
   } else { // User is signed out!
     // Show sign-in button, etc.
