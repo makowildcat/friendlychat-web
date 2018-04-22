@@ -20,18 +20,11 @@ function NotAlone() {
   this.checkSetup();
 
   // Shortcuts to DOM Elements.
-  this.headerHand = document.getElementById('header-hand');
-  this.buttonFirst = document.getElementById('btn-first');
-  this.buttonSecond = document.getElementById('btn-second');
-  this.buttonThird = document.getElementById('btn-third');
-  this.buttonFourth = document.getElementById('btn-fourth');
-  this.buttonFifth = document.getElementById('btn-fifth');
+  this.buttonLeft = document.getElementById('btn-left');
+  this.buttonRight = document.getElementById('btn-right');
 
-  this.buttonFirst.addEventListener('click', this.sendVote.bind(this, this.buttonFirst.id));
-  this.buttonSecond.addEventListener('click', this.sendVote.bind(this, this.buttonSecond.id));
-  this.buttonThird.addEventListener('click', this.sendVote.bind(this, this.buttonThird.id));
-  this.buttonFourth.addEventListener('click', this.sendVote.bind(this, this.buttonFourth.id));
-  this.buttonFifth.addEventListener('click', this.signOut.bind(this));
+  this.buttonLeft.addEventListener('click', this.signIn.bind(this, this.buttonLeft.id));
+  this.buttonRight.addEventListener('click', this.signIn.bind(this, this.buttonRight.id));
 
   this.initFirebase();
 }
@@ -46,45 +39,43 @@ NotAlone.prototype.initFirebase = function() {
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
-
-NotAlone.prototype.sendVote = function(e) {
+NotAlone.prototype.saveHand = function(e) {
   // Check that the user is signed in.
   if (this.checkSignedInWithMessage()) {
     var currentUser = this.auth.currentUser;
     // Send a vote entry to the Firebase Database.
-    this.database.ref("cooking/left/" + currentUser.uid).set({
-      vote: e,
+    this.database.ref("people/" + currentUser.uid).set({
+      hand: this.hand,
     }).then(function() {
-
+        window.location.href = "index.html";
     }.bind(this)).catch(function(error) {
       console.error('Error writing new message to Firebase Database', error);
     });
   }
 }
 
-// Signs-out of NotAlone.
-NotAlone.prototype.signOut = function() {
-  // Sign out of Firebase.
-  this.auth.signOut();
+// Signs-in NotAlone.
+NotAlone.prototype.signIn = function(e) {
+  // Sign in Firebase using anonymous identity.
+  this.hand = e;
+  this.auth.signInAnonymously().catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
+  });
 };
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 NotAlone.prototype.onAuthStateChanged = function(user) {
   if (user) { // User is signed in!
-    var handRef = this.database.ref('people/' + user.uid);
-    handRef.on('value', function(snapshot) {
-      //var handText = div.querySelector('#header-hand');
-      var div = document.getElementById("header-hand");
-      div.innerHTML = snapshot.val().hand;
-    });
-
-    this.database.ref('people/' + user.uid).once('value').then(function(snapshot) {
-      var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-      // ...
-    });
+    if (this.hand != undefined) {
+      this.saveHand()
+    } else {
+      window.location.href = "index.html";
+    }
   } else { // User is signed out!
     // Show sign-in button, etc.
-    window.location.href = "choseHand.html";
   }
 };
 
