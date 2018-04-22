@@ -24,11 +24,11 @@ function NotAlone() {
   this.checkSetup();
 
   // Shortcuts to DOM Elements.
-  this.buttonFirst = document.getElementById('btn-first');
-  this.buttonSecond = document.getElementById('btn-second');
+  this.imageFirst = document.getElementById('img-first');
+  this.imageSecond = document.getElementById('img-second');
 
-  this.buttonFirst.addEventListener('click', this.sendVoteFirst.bind(this));
-  this.buttonSecond.addEventListener('click', this.sendVoteSecond.bind(this));
+  this.imageFirst.addEventListener('click', this.sendVoteFirst.bind(this));
+  this.imageSecond.addEventListener('click', this.sendVoteSecond.bind(this));
 
   this.initFirebase();
 }
@@ -91,6 +91,7 @@ NotAlone.prototype.onAuthStateChanged = function(user) {
       var headerHandRef = document.getElementById("header-hand");
       var buttonFirst = document.getElementById('btn-first');
       var buttonSecond = document.getElementById('btn-second');
+      // document.getElementById("imageid").src="../template/save.png";
       headerHandRef.innerHTML = handCurrentUser;
       if (handCurrentUser == "Left") {
           buttonFirstTxt = "Grab";
@@ -99,8 +100,24 @@ NotAlone.prototype.onAuthStateChanged = function(user) {
           buttonFirstTxt = "Mash";
           buttonSecondTxt = "Cook";
       }
-      buttonFirst.innerHTML = buttonFirstTxt;
-      buttonSecond.innerHTML = buttonSecondTxt;
+      var imageFirst = document.getElementById("img-first");
+      imageFirst.src = "img/" + buttonFirstTxt.toLowerCase() + ".png";
+      var css = '#img-first:active { background: url(img/' + buttonFirstTxt.toLowerCase() + '_press.png); background-size: ' + screen.height/2.5 + 'px; }';
+      css += '#img-second:active { background: url(img/' + buttonSecondTxt.toLowerCase() + '_press.png); background-size: ' + screen.height/2.5 + 'px; }';
+      var style = document.createElement('style');
+      if (style.styleSheet) {
+          style.styleSheet.cssText = css;
+      } else {
+          style.appendChild(document.createTextNode(css));
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+      imageFirst.width = screen.height/2.5;
+
+      var imageSecond = document.getElementById("img-second");
+      imageSecond.src= "img/" + buttonSecondTxt.toLowerCase() + ".png";
+      imageSecond.width = screen.height/2.5;
+
+
     });
   } else { // User is signed out!
     // Show sign-in button, etc.
