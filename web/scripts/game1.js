@@ -19,9 +19,10 @@
 'use strict';
 var score;
 var totalVotes = [0,0,0,0];
-var voteType = ["Cook", "Mash", "Grab", "Release"];
+var voteType = ["Cook", "Mash", "Bowl", "Pot"];
 window.onload = function(){
 	//gameStart();
+	beginCooking();
 	window.friendlyChat = new FriendlyChat();
 	score = 0;
 };
@@ -31,7 +32,7 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 const LENGTH_OF_VOTE = 10;
-const LENGTH_OF_PAUSE = 7; 
+const LENGTH_OF_PAUSE = 5; 
 
 //load steam images
 var steam1 = new Image();
@@ -45,12 +46,11 @@ pot1.src = "images/pot-cold-small.png";
 pot2.src = "images/pot-heating-small.png";
 pot3.src = "images/pot-done-0-small.png";
 pot4.src = "images/pot-done-1-small.png";
-
+var potatoBowl = new Image();
+potatoBowl.src = "images/finished-small.png";
 var bowl1 = new Image();
 bowl1.src = "images/bowl-small.png";
 
-var mashed = new Image();
-mashed = "images/mashed-small.png";
 
 //get current canvas width and height and fill a rectangle
 var w = 1000;
@@ -97,10 +97,10 @@ function displayVotes(){
 	document.getElementById("mashVotes").innerHTML = totalVotes[1];
 	document.getElementById("grabVotes").innerHTML = totalVotes[2];
 	document.getElementById("releaseVotes").innerHTML = totalVotes[3];
-	console.log("Votes for Cook: " + totalVotes[0]);
-    console.log("Votes for Mash: " + totalVotes[1]);
-    console.log("Votes for Grab: " + totalVotes[2]);
-    console.log("Votes for Release: " + totalVotes[3]);
+	console.log("Votes for Cook Right: " + totalVotes[0]);
+    console.log("Votes for Mash Right: " + totalVotes[1]);
+    console.log("Votes for Mash Left: " + totalVotes[2]);
+    console.log("Votes for (Release) Cook Left: " + totalVotes[3]);
 }
 
 
@@ -119,7 +119,7 @@ function overlayOff(num) {
  * mini game level commences
 */
 function gameStart(){
-	var time = 3;
+	var time = 10;
 	overlayOn(1);
 
 	var countdown = window.setInterval(function(){
@@ -135,7 +135,6 @@ function gameStart(){
 }
 
 function beginCooking(){
-	displayInstructions();
 	//while time is still going, keep cooking potatoes
 	/*var gameMins = 3, gameSecs = 59;
 	var totalGameInterval = window.setInterval(function(){
@@ -151,7 +150,7 @@ function beginCooking(){
 		}
 	}, 1000);*/
 	onePotatoIteration();
-	//increase potatoe score
+	
 }
 /*
  * players must correctly identify the correct actions to take 
@@ -168,8 +167,9 @@ function onePotatoIteration(){
 	overlayOn(2);
 
 	var voteInterval = window.setInterval(function(){
-		if(!isPaused){
-			voteTime = voteTime -1;
+		
+		voteTime = voteTime -1;
+		if(voteTime >= 0){
 			document.getElementById("voteTime").innerHTML = voteTime;
 		}
 		if(voteTime == 0){
@@ -177,12 +177,14 @@ function onePotatoIteration(){
 			majorityRight = checkMajority("Right");
 
 			//if the majorities have successfully selected the correct two options
-			if(majorityLeft == "Grab" && majorityRight == "Cook"){
+			if(majorityLeft == "Release" && majorityRight == "Cook"){
 				//clear the game timer for this portion of the level
 				clearInterval(voteInterval);
 				overlayOff(2);
+				console.log("success");
 				//pause the game timer and animate pot
-				isPaused = true;
+				//isPaused = true;
+				pauseCount = LENGTH_OF_PAUSE;
 				var pauseInterval = window.setInterval(function(){
 					pauseCount = pauseCount - 1;
 					if(pauseCount > 5)
@@ -193,19 +195,20 @@ function onePotatoIteration(){
 						drawPot(3);
 					if(pauseCount == 0){
 						clearInterval(pauseInterval);
-						//end on time, begin the second victory case
-						//secondPotatoIteration();
+						//end on time, begin the second combination to vote on
+						secondPotatoIteration();
 						pauseCount = LENGTH_OF_PAUSE;
 						isPaused = false;
 						voteTime = LENGTH_OF_VOTE;
 					}
-				}, 100);
+					
+				}, 1000);
 				
 			}else{
 				//case where the majorities were unsuccessful so we need 
 				//set the kitchen on fire and then go vote again
-
-				isPaused = true;
+				pauseCount = LENGTH_OF_PAUSE;
+				//isPaused = true;
 				var pauseInterval = window.setInterval(function(){
 					pauseCount = pauseCount - 1;
 					showFire(1);
@@ -213,21 +216,19 @@ function onePotatoIteration(){
 					if(pauseCount == 0){
 						clearInterval(pauseInterval);
 						showFire(0);
+						drawScore();
 						pauseCount = LENGTH_OF_PAUSE;
 						isPaused = false;
 						voteTime = LENGTH_OF_VOTE;
 					}
-				}, 100);
+					
+				}, 1000);
 				
 				document.getElementById("voteTime").innerHTML = "Vote Again";
 			}
 		}
-
+		
 	}, 1000);	
-	
-	//do{
-	//	majority = performVote();
-	//}while(majority[0] != "Release" || majority != "Mash");
 }
 
 function secondPotatoIteration(){
@@ -238,8 +239,8 @@ function secondPotatoIteration(){
 	overlayOn(2);
 
 	var voteInterval = window.setInterval(function(){
-		if(!isPaused){
-			voteTime = voteTime -1;
+		voteTime = voteTime -1;
+		if(voteTime >= 0){
 			document.getElementById("voteTime").innerHTML = voteTime;
 		}
 		if(voteTime == 0){
@@ -247,12 +248,14 @@ function secondPotatoIteration(){
 			majorityRight = checkMajority("Right");
 
 			//if the majorities have successfully selected the correct two options
-			if(majorityLeft == "Release" && majorityRight == "Mash"){
+			if(majorityLeft == "Grab" && majorityRight == "Mash"){
 				//clear the game timer for this portion of the level
 				clearInterval(voteInterval);
 				overlayOff(2);
+				console.log("Success");
 				//pause the game timer and animate bowl
-				isPaused = true;
+				//isPaused = true;
+				pauseCount = LENGTH_OF_PAUSE;
 				var pauseInterval = window.setInterval(function(){
 					pauseCount = pauseCount - 1;
 					drawBowl();
@@ -263,33 +266,35 @@ function secondPotatoIteration(){
 					else if(pauseCount > 0)
 						drawBowl(3);
 					*/
-					if(pauseCount == 0){
+					if(pauseCount <= 0){
 						clearInterval(pauseInterval);
 						score++;
-						displayPotato();
+						drawScore();
 						pauseCount = LENGTH_OF_PAUSE;
 						isPaused = false;
 						voteTime = LENGTH_OF_VOTE;
 					}
-				}, 100);
-				
+				}, 1000);
 			}else{
 				//case where the majorities were unsuccessful so we need 
 				//set the kitchen on fire and then go vote again
 
-				isPaused = true;
+				//isPaused = true;
+				pauseCount = LENGTH_OF_PAUSE;
 				var pauseInterval = window.setInterval(function(){
 					pauseCount = pauseCount - 1;
 					showFire(1);
 					
-					if(pauseCount == 0){
+					if(pauseCount <= 0){
 						clearInterval(pauseInterval);
 						showFire(0);
+						drawPot(3);
+						drawScore();
 						pauseCount = LENGTH_OF_PAUSE;
 						isPaused = false;
 						voteTime = LENGTH_OF_VOTE;
 					}
-				}, 100);
+				}, 1000);
 				
 				document.getElementById("voteTime").innerHTML = "Vote Again";
 			}
@@ -322,10 +327,10 @@ function drawBowl(){
 	ctx.drawImage(bowl1,0,0,100,86, 200, 40, 50, 35);
 }
 
-function drawPotato(){
-	//for(var i = 0; i < score; i++){
-		ctx.drawImage(mashed,0,0,100,95, 50, 40, 50, 35);
-	//}
+function drawScore(){
+	for(var i = 0; i < score; i++){
+		ctx.drawImage(potatoBowl,0,0,100,95, 20 + i*50, 100, 50, 35);
+	}
 }
 
 function displayInstructions(){
