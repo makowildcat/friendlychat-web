@@ -52,7 +52,7 @@
 <body>
 <div>
 
-  <!-- Header section containing logo 
+  <!-- Header section containing logo
   <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
     <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
       <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
@@ -61,7 +61,7 @@
       <div id="user-container">
         <div hidden id="user-pic"></div>
         <div hidden id="user-name"></div>
-       
+
       </div>
     </div>
   </header>
@@ -69,13 +69,13 @@
 
   <main>
         <div id="overlay1">
-          <span id="text">Game Starts in: 
+          <span id="text">Game Starts in:
             <span id="timer"> 10 </span> s
           </span>
         </div>
 
         <div id="overlay2">
-          <span id="text">Time Remaining: 
+          <span id="text">Time Remaining:
             <span id="voteTime"> 10 </span>
           </span>
         </div>
@@ -95,10 +95,19 @@
             <li><span id="mashVotes">0</span> Mash</li>
           </ul>
         </div>
-   
+
 
   </main>
 </div>
+
+<script type="text/javascript">
+<!--
+var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+if ((screen.width <= 699) || (/android/i.test(userAgent)) || (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream)) {
+  document.location = "controller/index.html";
+}
+//-->
+</script>
 
 <!-- Import and configure the Firebase SDK -->
 <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->

@@ -48,9 +48,20 @@
 </head>
 <body>
   <div class="container-fluid">
-    <h1>Choose</h1>
-    <button id="btn-left" type="button" class="btn btn-primary btn-block">Left</button>
-    <button id="btn-right" type="button" class="btn btn-secondary btn-block">Right</button>
+    <div class="row">
+        <div class="col">
+            <img src="img/robo-tato-title.png" width="80%" class="mx-auto d-block"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <img src="img/question_mark.png" width="80%" class="mx-auto d-block"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col"><img src="img/left_hand.gif" width="100%" id="btn-left"/></div>
+        <div class="col"><img src="img/right_hand.gif" width="100%" id="btn-right"/></div>
+    </div>
     <!-- <button id="btn-auto" type="button" class="btn btn-success btn-block">Automatic</button> -->
   </div>
 
@@ -64,6 +75,12 @@
 <script src="/__/firebase/4.1.3/firebase.js"></script>
 <script src="/__/firebase/init.js"></script>
 
-<script src="choseHand.js"></script>
+<script src="choseHand.js">
+  window.oncontextmenu = function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  };
+</script>
 </body>
 </html>

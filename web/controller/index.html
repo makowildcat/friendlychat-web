@@ -30,14 +30,22 @@
 
   <!-- App Styling -->
   <link rel="stylesheet" href="main.css">
+
+  <link rel="prefetch" href="img/grab.png">
+  <link rel="prefetch" href="img/grab_press.png">
+  <link rel="prefetch" href="img/mash.png">
+  <link rel="prefetch" href="img/mash_press.png">
+  <link rel="prefetch" href="img/cook.png">
+  <link rel="prefetch" href="img/cook_press.png">
+  <link rel="prefetch" href="img/release.png">
+  <link rel="prefetch" href="img/release_press.png">
+
 </head>
 <body>
-  <div class="container">
-    <p class="text-center" id="header-hand">
-      # Hand
-    </p>
-    <img id="img-first" src="" class="mx-auto d-block" alt="Responsive image">
-    <img id="img-second" src="" class="mx-auto d-block" alt="Responsive image">
+  <div id="content" class="container">
+    <div id="img-hand" class="mx-auto d-block"></div>
+    <div id="img-first" class="mx-auto d-block controllerButton"></div>
+    <div id="img-second" class="mx-auto d-block controllerButton"></div>
   </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -50,6 +58,12 @@
 <script src="/__/firebase/4.1.3/firebase.js"></script>
 <script src="/__/firebase/init.js"></script>
 
-<script src="main.js"></script>
+<script src="main.js">
+  window.oncontextmenu = function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  };
+</script>
 </body>
 </html>

@@ -4,4 +4,19 @@ html {
   width: 100vw;
   overflow-y: hidden;
   overflow-x: hidden;
+  background-color: #FBFBFB;
+}
+
+body {
+  background-color: #FBFBFB;
+}
+
+#img-hand {
+    z-index: 1;
+    position:static;
+    margin-bottom: 24px;
+}
+
+.controllerButton {
+    z-index: 99;
 }
