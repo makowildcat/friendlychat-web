@@ -34,8 +34,10 @@ var steam1 = new Image();
 steam1.src= "images/steam-1.png";
 var steam = new Image();
 steam.src= "images/steam.png";
+var fireImg = new Image();
+fireImg.src = "images/fire.png";
 var pot1 = new Image(), pot2 = new Image(), pot3 = new Image(),pot4 = new Image();
-pot1.src = "images/pot-cold.png";
+pot1.src = "images/pot-cold-small.png";
 pot2.src = "images/pot-heating.png";
 pot3.src = "images/pot-done-0.png";
 pot4.src = "images/pot-done-1.png";
@@ -187,9 +189,8 @@ function onePotatoIteration(){
 				isPaused = true;
 				var pauseInterval = window.setInterval(function(){
 					pauseCount = pauseCount - 1;
-					if(pauseCount % 2 == 0)
-						showFire(1);
-					else showFire(2);
+					showFire(1);
+					
 					if(pauseCount == 0){
 						clearInterval(pauseInterval);
 						showFire(0);
@@ -214,13 +215,12 @@ function showFire(whichOne){
 	if(whichOne == 0)
 		ctx.clearRect(0,0,w,h);
 	else if(whichOne == 1)
-		ctx.drawImage(steam, 0,0, 50, 50);
-	else ctx.drawImage(steam1, 0,0, 50, 50);
+		ctx.drawImage(fireImg, 0,0);
 }
 
 function drawPot(){
-	ctx.clearRect(115,25,50,25);
-	ctx.drawImage(pot1,115,25, 50,25);
+	//ctx.clearRect(115,25,100,7)8;
+	ctx.drawImage(pot1,115,25);
 }
 
 function displayInstructions(){
