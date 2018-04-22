@@ -191,6 +191,7 @@ FriendlyChat.prototype.onAuthStateChanged = function(user) {
 
     // We load currently existing chant messages.
     this.loadMessages();
+    this.countVotes();
 
     // We save the Firebase Messaging Device token and enable notifications.
     this.saveMessagingDeviceToken();
@@ -298,7 +299,7 @@ FriendlyChat.prototype.displayMessage = function(key, name, text, picUrl, imageU
   // Show the card fading-in and scroll to view the new message.
   setTimeout(function() {div.classList.add('visible')}, 1);
   this.messageList.scrollTop = this.messageList.scrollHeight;
-  this.messageInput.focus();
+  
 };
 
 // Enables or disables the submit button depending on the values of the input

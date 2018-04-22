@@ -197,3 +197,40 @@ main, #messages-card {
   top: -1px;
   margin-right: 5px;
 }
+
+canvas{
+  display: block;
+  background-image: url("../images/oven.png");
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 1000px 799px;
+  max-width: 1000px;
+  height: 799px;
+  margin-top: 3%;
+  margin-left: auto;
+  margin-right: auto;
+}
+ul{
+  list-style-type: none;
+  font-size: 15pt;
+  font-weight: 900;
+  padding: 5px;
+}
+#rightVoteBox{
+  position: fixed;
+  display: block;
+  top: 100px;
+  right: 15px;
+
+  background-color: beige;
+  border-radius: 5px;
+}
+#leftVoteBox{
+  position: fixed;
+  display: block;
+  top: 100px;
+  left: 0px;
+
+  background-color: beige;
+  border-radius: 5px;
+}
