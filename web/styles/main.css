@@ -206,7 +206,7 @@ canvas{
   background-size: 1000px 799px;
   max-width: 1000px;
   height: 799px;
-  margin-top: 3%;
+  margin-top: 0;
   margin-left: auto;
   margin-right: auto;
 }
@@ -219,8 +219,8 @@ ul{
 #rightVoteBox{
   position: fixed;
   display: block;
-  top: 100px;
-  right: 15px;
+  top: 0px;
+  right: 5%;
 
   background-color: beige;
   border-radius: 5px;
@@ -228,9 +228,40 @@ ul{
 #leftVoteBox{
   position: fixed;
   display: block;
-  top: 100px;
-  left: 0px;
+  top: 0px;
+  left: 5%;
 
   background-color: beige;
   border-radius: 5px;
+}
+#countdown{
+  position: absolute;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*borrowed with love from W3Schools*/
+#overlay1, #overlay2 {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.25); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+/*borrowed with love from W3Schools*/
+#text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    color: white;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
 }
